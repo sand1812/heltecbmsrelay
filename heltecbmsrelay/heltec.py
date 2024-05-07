@@ -404,7 +404,7 @@ class HeltecBMSClient:
 
 
     
-async def main():
+async def doit():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--device",
                         help="MAC Address",
@@ -450,5 +450,8 @@ async def main():
         print("timeout")
         await asyncio.sleep(1)
 
-
-asyncio.run(main())
+def main():
+    asyncio.run(doit())
+        
+if __name__ == "__main__":
+    asyncio.run(doit())

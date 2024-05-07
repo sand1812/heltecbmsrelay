@@ -20,5 +20,6 @@ setup(
         "Programming Language :: Python :: 3.12",
     ],
     packages=["heltecbmsrelay"],
+    install_requires=['bleak>=0.21',],
     entry_points={"console_scripts": ["heltecbms=heltecbmsrelay:main"]},
 )
