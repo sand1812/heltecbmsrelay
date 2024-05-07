@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import sys
 import os
 import asyncio
@@ -10,7 +8,7 @@ from typing import List
 import time
 import argparse
 import json
-from Transports import TransportBLE
+from .Transports import TransportBLE
 
 class ReadException(Exception):
     pass

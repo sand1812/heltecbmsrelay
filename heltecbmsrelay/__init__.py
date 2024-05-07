@@ -2,6 +2,7 @@ import argparse
 import json
 import asyncio
 from .Transports import TransportBLE
+from .heltec import HeltecBMSClient
 
 async def doit():
     parser = argparse.ArgumentParser()
