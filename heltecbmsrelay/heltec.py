@@ -15,7 +15,7 @@ class ReadException(Exception):
 
 START_MARK = 0x01
 READ_COMMAND = 0x03
-DEBUG = 1
+DEBUG = 0
 
 def calc_crc(data: bytes) -> int:
     return 0xffff - sum(data) + 1

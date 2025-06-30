@@ -29,6 +29,8 @@ async def doit():
             print("Current = %.2fA" % infos["current"])
             print("Temp1 = %.2f°C" % infos["t1"])
             print("Temp2 = %.2f°C" % infos["t2"])
+            print("Temp3 = %.2f°C" % infos["t3"])
+            print("Temp4 = %.2f°C" % infos["t4"])
             print("Cell1 Voltage = %.4fV" % infos["cell1"])
             print("Cell2 Voltage = %.4fV" % infos["cell2"])
             print("Cell3 Voltage = %.4fV" % infos["cell3"])
