@@ -15,10 +15,16 @@ class ReadException(Exception):
 
 START_MARK = 0x01
 READ_COMMAND = 0x03
-DEBUG = 0
+DEBUG = 1
 
 def calc_crc(data: bytes) -> int:
     return 0xffff - sum(data) + 1
+
+
+def gettemp(h,l): # high byte, low byte
+    t = (h*256 + l) / 10.0 - 40
+    decimal = t - round(t)
+    return round(t)-decimal
 
 class HeltecBMSClient:
     def __init__(self, transport):
@@ -60,8 +66,8 @@ class HeltecBMSClient:
         if DEBUG: print("v1 = %d - v2 = %d - v3 = %d - v4 = %d - v5 = %d - v6 = %d - v7 = %d - v8 = %d" % (v1,v2,v3,v4,v5,v6,v7,v8))                    
         vbat = (ar[8]*256+ar[9])/100.0
         current = float((ar[10]*256+ar[11])-10000)/10.0
-        t1 = float(ar[12]*256+ar[13])/10.0-40
-        t2 = float(ar[14]*256+ar[15])/10.0-40
+        t1 = gettemp(ar[12], ar[13]) #float(ar[12]*256+ar[13])/10.0-40
+        t2 = gettemp(ar[14], ar[15]) #float(ar[14]*256+ar[15])/10.0-40
         uptime = int(ar[4]*256+ar[5])
         
         datas = {"uptime": uptime,
@@ -98,8 +104,13 @@ class HeltecBMSClient:
         v7 = int(ar[12]*256+ar[13])
         v8 = int(ar[14]*256+ar[15])
         cell_high=v8/1000.0
-        if DEBUG: print("v1 = %d - v2 = %d - v3 = %d - v4 = %d - v5 = %d - v6 = %d - v7 = %d - v8 = %d" % (v1,v2,v3,v4,v5,v6,v7,v8))        
-        datas = {"cell_high" : cell_high}
+        t3 = gettemp(ar[10], ar[11])  #float(ar[10]*256+ar[11])/10.0-40
+        t4 = gettemp(ar[12], ar[13])  #float(ar[12]*256+ar[13])/10.0-40        
+        if DEBUG: print("v1 = %d - v2 = %d - v3 = %d - v4 = %d - v5 = %d - v6 = %d - v7 = %d - v8 = %d" % (v1,v2,v3,v4,v5,v6,v7,v8))
+        if DEBUG: print("v6 = %d %d" % (ar[10], ar[11]))
+        datas = {"cell_high" : cell_high,
+                 "t3": t3,
+                 "t4": t4}
         return datas
 
 
